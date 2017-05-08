@@ -13,7 +13,11 @@ const ghStatusCreate = () => {
       method: 'POST',
       body: {
         ref: 'sample',
-        description: 'Deploying to Arduino...'
+        description: 'Deploying to Arduino...',
+        auto_merge: false,    // eslint-disable-line camelcase
+        required_contexts: [  // eslint-disable-line camelcase
+          'success'
+        ]
       },
       accept: 'application/vnd.github.ant-man-preview+json'
     })

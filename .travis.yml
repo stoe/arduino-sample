@@ -20,7 +20,6 @@ install:
 
 # test
 script:
-  - npm test
   - script/cibuild
 
 # deploy
