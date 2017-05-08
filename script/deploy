@@ -24,14 +24,15 @@ const ghStatus = (status, id) => {
 
   let cmd = `repos/${owner}/${repo}/deployments`;
   let body = {
-    ref: cli.input[0] || process.env.TRAVIS_PULL_REQUEST_SHA,
+    ref: cli.input[0],
     description: 'Deploying to Arduino...'
   };
 
   if (status && id) {
     cmd = `repos/${owner}/${repo}/deployments/${id}/statuses`;
     body = {
-      state: status
+      state: status,
+      description: 'Deploying to Arduino...'
     };
   }
 
