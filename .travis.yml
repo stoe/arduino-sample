@@ -20,4 +20,5 @@ install:
 
 script:
   - platformio account login -u $PIO_USERNAME -p $PIO_PASSWORD
-  - platformio remote --agent $PIO_AGENT run -v
+  # - platformio remote --agent $PIO_AGENT run -v
+  - platformio run -v
