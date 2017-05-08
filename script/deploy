@@ -35,8 +35,6 @@ const ghStatus = (status, id) => {
     };
   }
 
-  console.log(body);
-
   return new Promise((resolve, reject) => {
     got(cmd, {
       token: process.env.GH_TOKEN,
