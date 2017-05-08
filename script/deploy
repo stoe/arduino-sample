@@ -7,6 +7,12 @@ const got = require('gh-got');
 
 const branch = process.env.TRAVIS_PULL_REQUEST_BRANCH;
 
+// <debug>
+console.log(branch);
+console.log(process.env.TRAVIS_PULL_REQUEST);
+console.log(process.env.TRAVIS_PULL_REQUEST && branch);
+// </debug>
+
 if (process.env.TRAVIS_PULL_REQUEST && branch) {
   const ghStatus = (status, id) => {
     const owner = 'stoe';
