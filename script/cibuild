@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+platformio run --target clean
+platformio run -v

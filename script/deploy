@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+script/bootstrap
+
+dpl --provider=script --script=./pio.sh
