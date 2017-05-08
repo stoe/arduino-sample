@@ -6,20 +6,19 @@ const got = require('gh-got');
 const owner = 'stoe';
 const repo = 'arduino-sample';
 
+const branch = process.env.TRAVIS_PULL_REQUEST_BRANCH || 'test-deployments';
+
+// if (process.env.TRAVIS_PULL_REQUEST && branch) {
 const ghStatusCreate = () => {
   return new Promise((resolve, reject) => {
     got(`repos/${owner}/${repo}/deployments`, {
       token: process.env.GH_TOKEN,
       method: 'POST',
       body: {
-        ref: 'sample',
+        ref: branch,
         description: 'Deploying to Arduino...',
-        auto_merge: false,    // eslint-disable-line camelcase
-        required_contexts: [  // eslint-disable-line camelcase
-          'success'
-        ]
-      },
-      accept: 'application/vnd.github.ant-man-preview+json'
+        auto_merge: false
+      }
     })
       .then(res => resolve(res.body.id))
       .catch(err => reject(err));
@@ -62,4 +61,10 @@ ghStatusCreate()
         ora.fail(err.stderr);
       });
   })
-  .catch(err => console.log(err));
+  .catch(err => {
+    console.log(err);
+    ora.fail(err.message);
+  });
+// } else {
+//   console.log('not running in Travic CI.');
+// }
