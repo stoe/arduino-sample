@@ -14,10 +14,8 @@ const ghStatusCreate = () => {
       body: {
         ref: 'sample',
         description: 'Deploying to Arduino...',
-        auto_merge: false,    // eslint-disable-line camelcase
-        required_contexts: [  // eslint-disable-line camelcase
-          'success'
-        ]
+        auto_merge: false, // eslint-disable-line camelcase
+        required_contexts: ['success'] // eslint-disable-line camelcase
       },
       accept: 'application/vnd.github.ant-man-preview+json'
     })
