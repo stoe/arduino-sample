@@ -6,8 +6,9 @@ const Ora = require('ora');
 const got = require('gh-got');
 
 const branch = process.env.TRAVIS_PULL_REQUEST_BRANCH;
+const isPR = process.env.TRAVIS_PULL_REQUEST;
 
-if (process.env.TRAVIS_PULL_REQUEST && branch) {
+if (isPR && branch) {
   const ghStatus = (status, id) => {
     const owner = 'stoe';
     const repo = 'arduino-sample';
@@ -16,8 +17,7 @@ if (process.env.TRAVIS_PULL_REQUEST && branch) {
     let body = {
       ref: process.env.TRAVIS_PULL_REQUEST_SHA,
       description: 'Deploying to Arduino...',
-      auto_merge: false, // eslint-disable-line camelcase
-      required_contexts: ['success'] // eslint-disable-line camelcase
+      auto_merge: false // eslint-disable-line camelcase
     };
 
     if (status && id) {
