@@ -24,4 +24,4 @@ script:
 
 # deploy
 after_success:
-  - script/deploy
+  - 'script/deploy $TRAVIS_PULL_REQUEST_SHA'
