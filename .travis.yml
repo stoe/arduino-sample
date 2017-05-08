@@ -1,39 +1,21 @@
 language: python
 python:
-    - "2.7"
+  - '2.7'
 
 sudo: false
+
 cache:
-    directories:
-        - "~/.platformio"
+  directories:
+    - "~/.platformio"
+
+env:
+  global:
+  - secure: BTK8wHjkGU51lmsrvrE/Hq2iNUupC3HkxI8rVz/NVX5HGo+/oOn4xNhsak4GPOAOmtaeK8w0JIhW4zOuAwWygqP7aYJrNAGm1jIX5tLXL+WeaVVcvLlx+WoxecFN86r/nXwWfEfkhuhcKfhCS+TNYAxVUcyMjJFq4Z8oW+ySP+fZ/wQinKEx4PAr01jI7g/2BiTkUqnJI+Gpi0sLzmNSGXlNyOIS3S5bODYkYWL9U/DOPzgqMmGoVQE2wGScDsilK77rTFOocWdkAp+fG/HEdpMcUn8Gi3hcJnXzv5979esmsb5AdOas3e2bBIjnNWxyHPcXeCKCZ08DDyO6LZHKGuptFVsU+oD5TPTNsSr7Jmdz4pmfEjSbMOvjrJj5wQ7B+NF2l+Z8pWRGSeFMd+d97aiUlM0oK3cp666ctXHF4bd7a0kPEwyBAPayEsy5lfgRY1kw3Iww7MCwaqK9diYSQktB5ZU++U1XD95zJztmL1dBO3PMQ0Df0zvr4YDI0VXNd2HNcSj1gaMX4rXyIO2njuLz3bVhA7U4CuZ+QJPtCwH68/7elTQBfyuyRuRvW++ApuqTNUENaW8AyBsogUH3948wOvXt1MFSG5HDR3c/jQ+9LXySpYpiRBHAzesMBTORdoF30GzGzwMmxCS6opE75RGCuS6s65xvmHF2dtmdKJ4=
+  - secure: LN4tRgfxmPXjp0Vda6K2ApOLnjt/317uXKorh36+7idpWcNzx65mIIl/rI7qXACZXkFWaO/Mi7+i8IQ0xHc67iVzUhiyuvtdSMZ/WK9tZ/1EEbwV67be8+Me31WpR4TmuGzEaRtc+sY69GUeipLO7cdpn4fTfVMO5PKDXE2dqswUdW6XTkdhSoJhVyO74d3bXj8xcNaTSxNe0KqDf15lMmi86Mib1538ycLpSXzGTzT7n3rOkMnsrp3QaXniAgfKlGiECsk80uG/yutOJn6/SHbUuyxRLF5TIUvCx2WYpwyGlz28Gz2jwLIffVkYtPX4LIfhb5WRUorj1uz4tBAFjPvfCsGGXkmXPzd9C8OqAF0v/LmqGFt7ndSuJ20l8yGLha2zjB3UIS/t9vLQUaa73eHDVbcI4Eqq2ns/XvqTci8O9mHhTKy12JC8U44unrJVa2/VYLulWF50peU3SvuJM/DRQ9aYRlT1ZiRq/ue3fSFPjTy8qKIF3LKyCFpMmiAgLkR0PRLUweoSSSY+9qqaXKCkRTSmuWjQVpUaokoT+/pY88EC4xTHyfQppIEDJln+gbM2PhfwhgIOpdRRESfF5S4tnIueg7SRSUZcybaAyabtAdk9Zm2rhrxdReOLV73x8PIoqJhVqDDJ6AcArhYvaXuZU0GoVochW4JzBhsW8Hg=
 
 install:
-    - pip install -U platformio
+  - pip install -U platformio
 
 script:
-    - platformio run
-
-
-#
-# Template #2: The project is intended to by used as a library with examples
-#
-
-# language: python
-# python:
-#     - "2.7"
-#
-# sudo: false
-# cache:
-#     directories:
-#         - "~/.platformio"
-#
-# env:
-#     - PLATFORMIO_CI_SRC=path/to/test/file.c
-#     - PLATFORMIO_CI_SRC=examples/file.ino
-#     - PLATFORMIO_CI_SRC=path/to/test/directory
-#
-# install:
-#     - pip install -U platformio
-#
-# script:
-#     - platformio ci --lib="." --board=ID_1 --board=ID_2 --board=ID_N
+  - platformio account login -u $PIO_USERNAME -p $PIO_SECRET
+  - platformio run
