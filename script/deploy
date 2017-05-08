@@ -21,14 +21,17 @@ if (process.env.TRAVIS_PULL_REQUEST && branch) {
     let cmd = `repos/${owner}/${repo}/deployments`;
     let body = {
       ref: branch,
-      description: 'Deploying to Arduino...'
+      description: 'Deploying to Arduino...',
+      auto_merge: false, // eslint-disable-line camelcase
+      required_contexts: ['success'] // eslint-disable-line camelcase
     };
 
     if (status && id) {
       cmd += `/${id}/statuses`;
       body = {
         state: status,
-        description: 'Deploying to Arduino...'
+        description: 'Deploying to Arduino...',
+        auto_inactive: true // eslint-disable-line camelcase
       };
     }
 
