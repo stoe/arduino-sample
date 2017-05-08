@@ -15,17 +15,13 @@ if (isPR && branch) {
 
     let cmd = `repos/${owner}/${repo}/deployments`;
     let body = {
-      ref: process.env.TRAVIS_PULL_REQUEST_SHA,
-      description: 'Deploying to Arduino...',
-      auto_merge: false // eslint-disable-line camelcase
+      ref: process.env.TRAVIS_PULL_REQUEST_SHA
     };
 
     if (status && id) {
-      cmd += `/${id}/statuses`;
+      cmd = `repos/${owner}/${repo}/deployments/${id}/statuses`;
       body = {
-        state: status,
-        description: 'Deploying to Arduino...',
-        auto_inactive: true // eslint-disable-line camelcase
+        state: status
       };
     }
 
