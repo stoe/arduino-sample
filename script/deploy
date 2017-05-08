@@ -17,7 +17,7 @@ if (branch) {
         body: {
           ref: branch,
           description: 'Deploying to Arduino...',
-          auto_merge: false, // eslint-disable-line camelcase
+          auto_merge: true, // eslint-disable-line camelcase
           required_contexts: ['success'] // eslint-disable-line camelcase
         },
         accept: 'application/vnd.github.ant-man-preview+json'
