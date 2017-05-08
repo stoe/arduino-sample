@@ -2,67 +2,79 @@
 'use strict';
 
 const execa = require('execa');
-const Ora = require('ora');
 const got = require('gh-got');
+const meow = require('meow');
+const Ora = require('ora');
 
-const branch = process.env.TRAVIS_PULL_REQUEST_BRANCH;
-const isPR = process.env.TRAVIS_PULL_REQUEST;
+const cli = meow(
+  `  Usage
+    $ script/deploy <SHA>
 
-if (isPR && branch) {
-  const ghStatus = (status, id) => {
-    const owner = 'stoe';
-    const repo = 'arduino-sample';
+  Examples
+    $ script/deploy
+`,
+  {
+    alias: {}
+  }
+);
 
-    let cmd = `repos/${owner}/${repo}/deployments`;
-    let body = {
-      ref: process.env.TRAVIS_PULL_REQUEST_SHA
-    };
+const ghStatus = (status, id) => {
+  const owner = 'stoe';
+  const repo = 'arduino-sample';
 
-    if (status && id) {
-      cmd = `repos/${owner}/${repo}/deployments/${id}/statuses`;
-      body = {
-        state: status
-      };
-    }
-
-    return new Promise((resolve, reject) => {
-      got(cmd, {
-        token: process.env.GH_TOKEN,
-        method: 'POST',
-        body
-      })
-        .then(res => resolve(res.body.id))
-        .catch(err => reject(err));
-    });
+  let cmd = `repos/${owner}/${repo}/deployments`;
+  let body = {
+    ref: cli.input[0] || process.env.TRAVIS_PULL_REQUEST_SHA,
+    description: 'Deploying to Arduino...'
   };
 
-  const ora = new Ora({
-    text: 'platformio remote upload'
-  }).start();
+  if (status && id) {
+    cmd = `repos/${owner}/${repo}/deployments/${id}/statuses`;
+    body = {
+      state: status
+    };
+  }
 
-  ghStatus()
-    .then(id => {
-      execa
-        .shell(`platformio account login -u ${process.env.PIO_USERNAME} -p ${process.env.PIO_PASSWORD}`)
-        .then(() => {
-          execa
-            .shell(`platformio remote --agent ${process.env.PIO_AGENT} run -e due -t upload -s`)
-            .then(() => {
-              ghStatus('success', id);
-              ora.succeed();
-            })
-            .catch(err => {
-              throw err;
-            });
-        })
-        .catch(err => {
-          ghStatus('error', id);
-          throw new Error(err.stderr);
-        });
+  console.log(body);
+
+  return new Promise((resolve, reject) => {
+    got(cmd, {
+      token: process.env.GH_TOKEN,
+      method: 'POST',
+      body,
+      accept: 'application/vnd.github.ant-man-preview+json'
     })
-    .catch(err => {
-      ora.fail(err.message);
-    });
-} else {
-  console.log('not a PR.');
-}
+      .then(res => resolve(res.body.id))
+      .catch(err => reject(err));
+  });
+};
+
+const ora = new Ora({
+  text: 'platformio remote upload'
+}).start();
+
+ghStatus()
+  .then(id => {
+    execa
+      .shell(`platformio account login -u ${process.env.PIO_USERNAME} -p ${process.env.PIO_PASSWORD}`)
+      .then(() => {
+        execa
+          .shell(`platformio remote --agent ${process.env.PIO_AGENT} run -e due -t upload -s`)
+          .then(() => {
+            ghStatus('success', id);
+            ora.succeed();
+          })
+          .catch(err => {
+            throw err;
+          });
+      })
+      .catch(err => {
+        ghStatus('error', id);
+        throw new Error(err.stderr);
+      });
+  })
+  .catch(err => {
+    ora.fail(err.message);
+
+    console.log(err);
+  });
