@@ -7,12 +7,6 @@ const got = require('gh-got');
 
 const branch = process.env.TRAVIS_PULL_REQUEST_BRANCH;
 
-// <debug>
-console.log(branch);
-console.log(process.env.TRAVIS_PULL_REQUEST);
-console.log(process.env.TRAVIS_PULL_REQUEST && branch);
-// </debug>
-
 if (process.env.TRAVIS_PULL_REQUEST && branch) {
   const ghStatus = (status, id) => {
     const owner = 'stoe';
@@ -20,7 +14,7 @@ if (process.env.TRAVIS_PULL_REQUEST && branch) {
 
     let cmd = `repos/${owner}/${repo}/deployments`;
     let body = {
-      ref: branch,
+      ref: process.env.TRAVIS_PULL_REQUEST_SHA,
       description: 'Deploying to Arduino...',
       auto_merge: false, // eslint-disable-line camelcase
       required_contexts: ['success'] // eslint-disable-line camelcase
@@ -34,11 +28,6 @@ if (process.env.TRAVIS_PULL_REQUEST && branch) {
         auto_inactive: true // eslint-disable-line camelcase
       };
     }
-
-    // <debug>
-    console.log(cmd);
-    console.log(body);
-    // </debug>
 
     return new Promise((resolve, reject) => {
       got(cmd, {
@@ -77,9 +66,6 @@ if (process.env.TRAVIS_PULL_REQUEST && branch) {
     })
     .catch(err => {
       ora.fail(err.message);
-
-      console.log('');
-      console.log('initial status update failed.');
     });
 } else {
   console.log('not a PR.');
