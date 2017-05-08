@@ -23,5 +23,8 @@ script:
   - script/cibuild
 
 # deploy
-after_success:
-  - 'script/deploy $TRAVIS_PULL_REQUEST_SHA'
+deploy:
+  provider: script
+  script: node script/deploy
+  on:
+    all_branches: true
