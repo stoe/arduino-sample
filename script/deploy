@@ -3,20 +3,7 @@
 
 const execa = require('execa');
 const got = require('gh-got');
-const meow = require('meow');
 const Ora = require('ora');
-
-const cli = meow(
-  `  Usage
-    $ script/deploy <SHA>
-
-  Examples
-    $ script/deploy
-`,
-  {
-    alias: {}
-  }
-);
 
 const ghStatus = (status, id) => {
   const owner = 'stoe';
@@ -24,7 +11,7 @@ const ghStatus = (status, id) => {
 
   let cmd = `repos/${owner}/${repo}/deployments`;
   let body = {
-    ref: cli.input[0],
+    ref: process.env.TRAVIS_PULL_REQUEST_SHA,
     description: 'Deploying to Arduino...',
     auto_merge: false,    // eslint-disable-line camelcase
     required_contexts: [] // eslint-disable-line camelcase
