@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
 # login
-platformio account login -u ${PIO_USERNAME} -p ${PIO_PASSWORD}
+pio account login -u ${PIO_USERNAME} -p ${PIO_PASSWORD}
 
 # clean target
-platformio remote -a ${PIO_AGENT} run -e due -t clean
+pio remote -a ${PIO_AGENT} run -e due -t clean
 
 # run tests
-platformio remote -a ${PIO_AGENT} test -e due
+pio remote -a ${PIO_AGENT} test -e due
+
+# logout when done
+pio account logout
