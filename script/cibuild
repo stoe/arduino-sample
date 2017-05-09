@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
 
-platformio run --target clean
-platformio run -v
+# clean target
+platformio remote -a ${PIO_AGENT} run -e due -t clean
+
+# run tests
+platformio remote -a ${PIO_AGENT} test -e due
