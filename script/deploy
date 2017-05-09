@@ -52,7 +52,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 ghStatus()
   .then(id => {
     execa
-      .shell(`pio account login`)
+      .shell(`pio account login -u ${process.env.PIO_USERNAME} -p ${process.env.PIO_PASSWORD}`)
       .then(() => {
         execa
           .shell(`pio remote --agent ${process.env.PIO_AGENT} run -e due -t upload -s`)
