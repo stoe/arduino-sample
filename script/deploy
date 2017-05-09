@@ -56,6 +56,12 @@ const ora = new Ora({
   text: 'platformio remote upload'
 }).start();
 
+if (!process.env.TRAVIS_PULL_REQUEST) {
+  ora.info('not a pull request.');
+  ora.stop();
+  process.exit(0);
+}
+
 ghStatus()
   .then(id => {
     execa
