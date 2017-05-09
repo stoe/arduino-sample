@@ -52,7 +52,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 ghStatus()
   .then(id => {
     execa
-      .shell(`platformio account login -u ${process.env.PIO_USERNAME} -p ${process.env.PIO_PASSWORD}`)
+      .shell(`platformio account login`)
       .then(() => {
         execa
           .shell(`platformio remote --agent ${process.env.PIO_AGENT} run -e due -t upload -s`)
