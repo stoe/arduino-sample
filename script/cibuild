@@ -8,3 +8,6 @@ pio remote -a ${PIO_AGENT} run -e due -t clean
 
 # run tests
 pio remote -a ${PIO_AGENT} test -e due
+
+# logout when done
+pio account logout
