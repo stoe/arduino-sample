@@ -25,7 +25,9 @@ const ghStatus = (status, id) => {
   let cmd = `repos/${owner}/${repo}/deployments`;
   let body = {
     ref: cli.input[0],
-    description: 'Deploying to Arduino...'
+    description: 'Deploying to Arduino...',
+    auto_merge: false,    // eslint-disable-line camelcase
+    required_contexts: [] // eslint-disable-line camelcase
   };
 
   if (status && id) {
@@ -41,7 +43,9 @@ const ghStatus = (status, id) => {
       token: process.env.GH_TOKEN,
       method: 'POST',
       body,
-      accept: 'application/vnd.github.ant-man-preview+json'
+      headers: {
+        accept: 'application/vnd.github.v3+json'
+      }
     })
       .then(res => resolve(res.body.id))
       .catch(err => reject(err));
