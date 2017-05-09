@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
 
-platformio run --target clean
-platformio run -v
+# login
+platformio account login -u ${PIO_USERNAME} -p ${PIO_PASSWORD}
+
+# clean target
+platformio remote -a ${PIO_AGENT} run -e due -t clean
+
+# run tests
+platformio remote -a ${PIO_AGENT} test -e due

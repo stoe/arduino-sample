@@ -9,6 +9,8 @@
 // Set LED_BUILTIN if it is not defined by Arduino framework
 // #define LED_BUILTIN 13
 
+#ifndef UNIT_TEST
+
 void setup()
 {
   // initialize LED digital pin as an output.
@@ -26,3 +28,5 @@ void loop()
    // wait for a second
   delay(1000);
 }
+
+#endif
