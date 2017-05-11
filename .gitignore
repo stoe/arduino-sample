@@ -1,6 +1,6 @@
+.platformio
 .pioenvs
 .piolibdeps
-.piostorage
 
 test/*export.cpp
 
