@@ -4,10 +4,10 @@
 pio account login -u ${PIO_USERNAME} -p ${PIO_PASSWORD}
 
 # clean target
-pio remote -a ${PIO_AGENT} run -e due -t clean
+pio remote -a ${PIO_AGENT} run -e ${PIO_BORAD} -t clean
 
 # run tests
-pio remote -a ${PIO_AGENT} test -e due
+pio remote -a ${PIO_AGENT} test -e ${PIO_BORAD}
 
 # logout when done
 pio account logout
